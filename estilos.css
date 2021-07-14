@@ -89,6 +89,14 @@ background: rgba(0, 0, 0, 0.2);
     
 
 }
+.carrousel{
+    width: 600px;
+    max-height: 10px;
+    position:relative;
+    top: -400px;
+    right:-200PX;
+    border: solid gray;
+}
 /*input[type='number'] {
     -moz-appearance:textfield;
 }
