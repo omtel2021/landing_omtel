@@ -90,13 +90,20 @@ background: rgba(0, 0, 0, 0.2);
 
 }
 .carrousel{
-    width: 600px;
-    max-height: 10px;
-    position:relative;
-    top: -400px;
-    right:-200PX;
-    border: solid gray;
+  max-width: fit-content;
+  max-height: fit-content;
+    position:absolute ;
+
+    /*top:-500px;
+    right:300PX;*/
+    z-index: -100;
+   /* border: solid gray;*/
 }
+
+
+
+/*.carousel { z-index: -99; } /* keeps this behind all content */
+
 /*input[type='number'] {
     -moz-appearance:textfield;
 }
