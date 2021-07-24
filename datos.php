@@ -15,13 +15,11 @@ $calle = $_POST["calle"];
 $entre_calle = $_POST["entre_calle"];
 $ciudad_localidad = $_POST["ciudad_localidad"];
 $provincia = $_POST["provincia"];
-/*$fibra_check = $_POST["fibra_check"];
-$portabilidad_check = $_POST["portabilidad_check"];*/
 
 // envia datos a la base de datos
 //agregar los valore esn INSERT y en VALUES
 $insert=  "INSERT INTO landing(nombre,apellido,telefono,calle,entre_calle,ciudad_localidad,provincia) 
-VALUES ('$nombre','$apellido','$telefono','$calle','$entre_calle','$ciudad_localidad', '$provincia') " ;
+VALUES ('$nombre','$apellido','$telefono','$calle','$entre_calle','$ciudad_localidad','$provincia') " ;
 
 //ejecutar consulta
 
