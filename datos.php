@@ -16,6 +16,7 @@ $entre_calle = $_POST["entre_calle"];
 $ciudad_localidad = $_POST["ciudad_localidad"];
 $provincia = $_POST["provincia"];
 
+
 // envia datos a la base de datos
 //agregar los valore esn INSERT y en VALUES
 $insert=  "INSERT INTO landing(nombre,apellido,telefono,calle,entre_calle,ciudad_localidad,provincia) 
