@@ -7,14 +7,18 @@ if(!$conexion){
 echo "Error al conectar a la base de datos";
 }
 
+if(isset($_POST["nombre"],$_POST["apellido"],$_POST["telefono"],$_POST["calle"],$_POST["entre_calle"],$_POST["ciudad_localidad"],$_POST["provincia"])){
 
-$nombre = $_POST["nombre"];
+    $nombre = $_POST["nombre"];
 $apellido= $_POST["apellido"];
 $telefono = $_POST["telefono"];
 $calle = $_POST["calle"];
 $entre_calle = $_POST["entre_calle"];
 $ciudad_localidad = $_POST["ciudad_localidad"];
 $provincia = $_POST["provincia"];
+
+}
+
 
 
 // envia datos a la base de datos
@@ -34,3 +38,4 @@ else{
 }
 //cerrar conexion
 mysqli_close($conexion);
+
