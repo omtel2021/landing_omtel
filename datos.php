@@ -22,7 +22,7 @@ $provincia = $_POST["provincia"];
 
 }
 
-$check=mysqli_query($conexion,"SELECT * from clients WHERE nombre='$nombre' and apellido='$apellido' and telefono='$telefono' ");
+$check=mysqli_query($conexion,"SELECT * from landing WHERE nombre='$nombre' and apellido='$apellido' and telefono='$telefono' ");
 $checkrows=mysqli_num_rows($check);
 
 if($checkrows >0){
