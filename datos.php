@@ -6,16 +6,47 @@ include 'conect.php';
 
 $conexion = mysqli_connect("$dbhost","$dbuser","$dbpass","$dbname","$dbport") or die("error conectando con el servidor");
 if(!$conexion){
-echo "Error al conectar a la base de datos";
+
+echo '<script> alert (" Error al conectar a la base de datos ") </script>'; 
+
+
 }
 
-// verificamos que los datos existan
 
+ // funcion evalua longitud de string
 
+function validStrLen($str, $min, $max){
+    $len = strlen($str);
+    if($len < $min){
+        echo '<script> alert (" valor demasiado corto ") </script>'; 
+        //return "El valor es demasiado corto, el minimo es $min caracteres ($max max)";
+        return FALSE;
 
+       
+    }
+    elseif($len > $max){
+        //return "El valor es demasiado largo, maximum is $max caracteres ($min min).";
+        echo '<script> alert (" valor demasiado largo ") </script>'; 
+        return FALSE;
 
+       
+    }
+    return TRUE;
+}
+
+// verificamos que los datos existan y no esten vacios
 if (isset($_POST["nombre"]) && isset($_POST["apellido"]) && isset($_POST["telefono"]) ) {
-    if(!empty($_POST["nombre"]) && !empty($_POST["apellido"]) && !empty($_POST["telefono"])){
+    if(empty($_POST["nombre"]) && empty($_POST["apellido"]) && empty($_POST["telefono"]) && empty($_POST["calle"])){
+
+        
+    
+
+        echo '<script> alert (" Debe llenar todos los campos ") </script>'; 
+        return false;
+
+    }
+  
+    else{
 
         $nombre = $_POST["nombre"];
         $apellido= $_POST["apellido"];
@@ -25,31 +56,38 @@ if (isset($_POST["nombre"]) && isset($_POST["apellido"]) && isset($_POST["telefo
         $ciudad_localidad = $_POST["ciudad_localidad"];
         $provincia = $_POST["provincia"];
         $servicio = $_POST["servicio"];
-
-        //ver filter_var
-
-    }
-    else{
-
-        echo '<script> alert (" Debe complentar los campos ") </script>'; 
-
+        validStrLen($nombre,4,20);
+        validStrLen ($apellido,4,20);
+        validStrLen($telefono,7,20);
+        validStrLen($calle,4,30);
+        validStrLen($entre_calle,4,30);
+        validStrLen($ciudad_localidad,4,35);
     }
     
    
     }
     
+   
     
 
  
 
 //revisar si telefono coincide para dejar mensaje de telefono registrado
-    $check=mysqli_query($conexion,"SELECT * from landing WHERE nombre='$nombre' and apellido='$apellido' and telefono='$telefono' and servicio='$servicio' ");
+
+$check=mysqli_query($conexion,"SELECT * from landing WHERE nombre='$nombre' and apellido='$apellido' and telefono='$telefono'  ");
 $checkrows=mysqli_num_rows($check);
 
 if($checkrows >0){
 
+   echo "<script language='javascript'>";
+   echo '<script> alert (" El usuario ya se encuentra registrado ") </script>';
+   echo 'window.history.go(-1);';
+   echo  'window.location.reload';
+   echo "</script>";
+   return false;
 
-echo '<script> alert (" El usuario ya se encuentra registrado ") </script>';
+
+
 
 }
 
@@ -66,19 +104,27 @@ VALUES ('$nombre','$apellido','$telefono','$calle','$entre_calle','$ciudad_local
 $resultado= mysqli_query($conexion,$insert);
 
 if(!$resultado){
-    echo '<script> alert (" error en el registro ") </script>';
+    
+
     mysqli_close($conexion);
+    echo "<script language='javascript'>";
+    echo '<script> alert (" Error al enviar formulario , intente mas tarde ") </script>';
+    echo 'window.history.go(-1)';
+    echo "</script>";
 }
 else{
     
    // echo '<script> alert (" El registro se relizó con éxito ") </script>';
     //echo '<script> confirm (" El registro se relizó con éxito ") </script>';
-    
-    mysqli_close($conexion);
-    echo '<script> var r = confirm("Successful Message!");
-    if (r == true){
-        header("Location:http://localhost/landing_omtelX");
-    }</script>';
+  
+   mysqli_close($conexion);
+
+  echo "<script language='javascript'>";
+  echo 'alert("El registro se realizo con exito");';
+  echo 'window.history.go(-1);';
+  echo  'window.location.reload';
+  echo "</script>";
+ 
     
    
 }

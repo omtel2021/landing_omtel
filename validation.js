@@ -10,6 +10,7 @@ function validate(){
     /*expresion= / \w+@\w\.+[a-z]/; (expresion regular para evaluear correo electronico)*/
     if(nombre==="" ||apellido==="" ||telefono==="" ||calle===""||entre_calle===""||ciudad_localidad===""){
         alert("debe completar todos los campos")  
+        return false;
 
     }/* puede agregarse el correo electronico hay que usar la expresion regulara comentada mas arriba*/
     else if(nombre.length>30||apellido.length>30 || telefono.length>20 ||calle.length>30||entre_calle.length>30||ciudad_localidad.length>30){
@@ -23,6 +24,7 @@ function validate(){
         return false
     }
     
+   /* window.location.reload();*/
    
     /*else if(!expresion.test(correo)){
         alert("ingrese una direccion de correo valida")
