@@ -15,10 +15,16 @@ echo '<script> alert (" Error al conectar a la base de datos ") </script>';
 
  // funcion evalua longitud de string
 
-function validStrLen($str, $min, $max){
+
+ function validStrLen($str, $min, $max){
     $len = strlen($str);
     if($len < $min){
+        
+        
         echo '<script> alert (" valor demasiado corto ") </script>'; 
+
+        
+
         //return "El valor es demasiado corto, el minimo es $min caracteres ($max max)";
         return FALSE;
 
@@ -27,6 +33,7 @@ function validStrLen($str, $min, $max){
     elseif($len > $max){
         //return "El valor es demasiado largo, maximum is $max caracteres ($min min).";
         echo '<script> alert (" valor demasiado largo ") </script>'; 
+     
         return FALSE;
 
        
@@ -36,18 +43,20 @@ function validStrLen($str, $min, $max){
 
 // verificamos que los datos existan y no esten vacios
 if (isset($_POST["nombre"]) && isset($_POST["apellido"]) && isset($_POST["telefono"]) ) {
+   
     if(empty($_POST["nombre"]) && empty($_POST["apellido"]) && empty($_POST["telefono"]) && empty($_POST["calle"])){
 
         
     
 
         echo '<script> alert (" Debe llenar todos los campos ") </script>'; 
+
         return false;
 
     }
-  
-    else{
+    elseif(validStrLen($_POST["nombre"],4,20)==TRUE && validStrLen ($_POST["apellido"],4,20)==TRUE && validStrLen($_POST["telefono"],5,20)==TRUE && validStrLen($_POST["calle"],4,30)==TRUE && validStrLen($_POST["entre_calle"],3,30)==TRUE){
 
+               
         $nombre = $_POST["nombre"];
         $apellido= $_POST["apellido"];
         $telefono = $_POST["telefono"];
@@ -56,13 +65,11 @@ if (isset($_POST["nombre"]) && isset($_POST["apellido"]) && isset($_POST["telefo
         $ciudad_localidad = $_POST["ciudad_localidad"];
         $provincia = $_POST["provincia"];
         $servicio = $_POST["servicio"];
-        validStrLen($nombre,4,20);
-        validStrLen ($apellido,4,20);
-        validStrLen($telefono,7,20);
-        validStrLen($calle,4,30);
-        validStrLen($entre_calle,4,30);
-        validStrLen($ciudad_localidad,4,35);
+
     }
+
+  
+    
     
    
     }
@@ -74,16 +81,31 @@ if (isset($_POST["nombre"]) && isset($_POST["apellido"]) && isset($_POST["telefo
 
 //revisar si telefono coincide para dejar mensaje de telefono registrado
 
-$check=mysqli_query($conexion,"SELECT * from landing WHERE nombre='$nombre' and apellido='$apellido' and telefono='$telefono'  ");
+$check=mysqli_query($conexion,"SELECT * from $db_table WHERE nombre='$nombre' and apellido='$apellido' and telefono='$telefono'  ");
 $checkrows=mysqli_num_rows($check);
+$checkphone=mysqli_query($conexion,"SELECT * from $db_table WHERE  telefono='$telefono'  ");
+$checkphon_num=mysqli_num_rows($checkphone);
+
+if($checkphon_num>0){
+    
+    echo "<script language='javascript'>";
+    echo 'alert("El numero ya se encuentra registrado");';
+    echo 'window.history.go(-1);';
+    echo  'window.location.reload';
+    echo "</script>";
+   return false;
+
+}
+
+
 
 if($checkrows >0){
 
-   echo "<script language='javascript'>";
-   echo '<script> alert (" El usuario ya se encuentra registrado ") </script>';
-   echo 'window.history.go(-1);';
-   echo  'window.location.reload';
-   echo "</script>";
+    echo "<script language='javascript'>";
+    echo 'alert("El usuario ya se encuentra registrado");';
+    echo 'window.history.go(-1);';
+    echo  'window.location.reload';
+    echo "</script>";
    return false;
 
 
@@ -92,11 +114,21 @@ if($checkrows >0){
 }
 
 
+if( empty( $nombre)||empty( $apellido)||empty( $calle)||empty( $entre_calle)||empty( $ciudad_localidad)){
+
+   echo "<script language='javascript'>";
+   echo '<script> alert (" Existen campos vacios ") </script>';
+   echo 'window.history.go(-1);';
+   echo  'window.location.reload';
+   echo "</script>";
+    return false;
+}
+
 else{
 
 // envia datos a la base de datos
 //agregar los valore en INSERT y en VALUES
-$insert= "INSERT INTO landing(nombre,apellido,telefono,calle,entre_calle,ciudad_localidad,provincia,servicio) 
+$insert= "INSERT INTO $db_table (nombre,apellido,telefono,calle,entre_calle,ciudad_localidad,provincia,servicio) 
 VALUES ('$nombre','$apellido','$telefono','$calle','$entre_calle','$ciudad_localidad','$provincia','$servicio') " ;
 
 //ejecutar consulta
