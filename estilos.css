@@ -43,6 +43,10 @@
     /*--------- 0%,100% hace que la imagen del principio y del final sean la misma , evita el salto de la animacion----------*/
 
     0% ,100%{background-image: url(slide_fibra.png) ; }
+    25%{
+
+        background-image: url(slide_playbox.png);
+    }
     
    50%{background-image: url(slide_porta.png);}
    

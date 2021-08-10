@@ -54,7 +54,7 @@ if (isset($_POST["nombre"]) && isset($_POST["apellido"]) && isset($_POST["telefo
         return false;
 
     }
-    elseif(validStrLen($_POST["nombre"],4,20)==TRUE && validStrLen ($_POST["apellido"],4,20)==TRUE && validStrLen($_POST["telefono"],5,20)==TRUE && validStrLen($_POST["calle"],4,30)==TRUE && validStrLen($_POST["entre_calle"],3,30)==TRUE){
+    elseif(validStrLen($_POST["nombre"],3,20)==TRUE && validStrLen ($_POST["apellido"],4,20)==TRUE && validStrLen($_POST["telefono"],5,20)==TRUE && validStrLen($_POST["calle"],4,30)==TRUE && validStrLen($_POST["entre_calle"],3,30)==TRUE){
 
                
         $nombre = $_POST["nombre"];
